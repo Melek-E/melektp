@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'git@gitlab.com/project.git',
+                    url: 'git@github.com:Melek-E/melektp.git',
                     credentialsId: '0e6e9e06-926d-4608-acb6-4505cbfa1da5'
             }
         }
