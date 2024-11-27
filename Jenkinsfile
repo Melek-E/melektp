@@ -22,7 +22,8 @@ pipeline {
         
         stage('Build Server Image') {
             steps {
-                dir('mern-app/server') { // Assuming 'server' is inside 'mern-app/server'
+                dir('mern-app/server') {
+                    sh 'pwd' // Debugging: print working directory
                     script {
                         dockerImageServer = docker.build("${IMAGE_NAME_SERVER}")
                     }
@@ -32,7 +33,8 @@ pipeline {
         
         stage('Build Client Image') {
             steps {
-                dir('mern-app/client') { // Assuming 'client' is at the root level
+                dir('mern-app/client') {
+                    sh 'pwd' // Debugging: print working directory
                     script {
                         dockerImageClient = docker.build("${IMAGE_NAME_CLIENT}")
                     }
