@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     triggers {
-        pollSCM('H/5 * * * *') // Corrected cron expression syntax
+        pollSCM('H/5 * * * *') // Cron expression to check every 5 minutes
     }
 
     environment {
@@ -14,15 +14,15 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'main',  // Changed to 'main' from 'master'
                     url: 'git@github.com:Melek-E/melektp.git', // GitHub SSH URL
-                    credentialsId: '0e6e9e06-926d-4608-acb6-4505cbfa1da5' // Using the provided GitHub SSH credentialsId
+                    credentialsId: '0e6e9e06-926d-4608-acb6-4505cbfa1da5' // Using your GitHub SSH credentialsId
             }
         }
         
         stage('Build Server Image') {
             steps {
-                dir('server') { // Assuming server is inside 'mern-app/server'
+                dir('server') { // Assuming 'server' is inside 'mern-app/server'
                     script {
                         dockerImageServer = docker.build("${IMAGE_NAME_SERVER}")
                     }
@@ -32,7 +32,7 @@ pipeline {
         
         stage('Build Client Image') {
             steps {
-                dir('client') { // Assuming client is at the root level
+                dir('client') { // Assuming 'client' is at the root level
                     script {
                         dockerImageClient = docker.build("${IMAGE_NAME_CLIENT}")
                     }
