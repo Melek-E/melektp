@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Correct DockerHub credentials reference
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Docker Hub credentials reference
         IMAGE_NAME_SERVER = 'melek16/mern-server' // Updated with your Docker Hub username
         IMAGE_NAME_CLIENT = 'melek16/mern-client' // Updated with your Docker Hub username
     }
@@ -14,15 +14,15 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', 
-                    url: 'https://github.com/Melek-E/melektp.git', // Corrected GitHub URL
-                    credentialsId: 'Github_ssh' // Corrected to use GitHub credentials
+                git branch: 'main',
+                    url: 'git@github.com:Melek-E/melektp.git', // GitHub SSH URL
+                    credentialsId: '0e6e9e06-926d-4608-acb6-4505cbfa1da5' // Using the provided GitHub SSH credentialsId
             }
         }
         
         stage('Build Server Image') {
             steps {
-                dir('server') { // `server` is now directly inside `mern-app`
+                dir('server') { // Assuming server is inside 'mern-app/server'
                     script {
                         dockerImageServer = docker.build("${IMAGE_NAME_SERVER}")
                     }
@@ -32,7 +32,7 @@ pipeline {
         
         stage('Build Client Image') {
             steps {
-                dir('client') { // `client` is at the root level inside `mern-app`
+                dir('client') { // Assuming client is at the root level
                     script {
                         dockerImageClient = docker.build("${IMAGE_NAME_CLIENT}")
                     }
