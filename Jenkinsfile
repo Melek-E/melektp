@@ -12,11 +12,21 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()  // Clean the workspace before starting the build
+            }
+        }
+
         stage('Checkout') {
             steps {
-                git branch: 'main',  // Changed to 'main' from 'master'
-                    url: 'git@github.com:Melek-E/melektp.git', // GitHub SSH URL
-                    credentialsId: '0e6e9e06-926d-4608-acb6-4505cbfa1da5' // Using your GitHub SSH credentialsId
+                script {
+                    // Ensure we're fetching all branches and updating references
+                    sh 'git fetch --all'  // Fetch all branches
+                    git branch: 'main',  // Ensure 'main' is the correct branch name
+                        url: 'git@github.com:Melek-E/melektp.git', // GitHub SSH URL
+                        credentialsId: '0e6e9e06-926d-4608-acb6-4505cbfa1da5' // Using your GitHub SSH credentialsId
+                }
             }
         }
         
